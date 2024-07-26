@@ -7,7 +7,7 @@ const gameContainer = document.getElementById('game-container');
 
 // Initialize game variables
 let carX = 0;
-let carSpeed = 0;
+let carSpeed = 5;
 let startTime = 0;
 let bestTime = Infinity;
 let isGameStarted = false;
@@ -29,7 +29,6 @@ startButton.addEventListener('click', () => {
 function startGame(){
      // Start game logic here
      carX = 0;
-     carSpeed = 0;
      startTime = Date.now();
      isGameStarted = true;
      startButton.textContent = 'Stop Game';
@@ -39,27 +38,46 @@ function startGame(){
 function stopGame(){
     // Stop game logic here
     carX = 0;
-    carSpeed = 0;
     isGameStarted = false;
     startButton.textContent = 'Start Game';
     timerElement.textContent = '';
 }
 
-// Add event listener to key press events
-document.addEventListener('keydown', (event) => {
-    if (isGameStarted && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+let steps = 0;
+let lastClickEvent = null;
+
+document.addEventListener('keyup', (event) => {
+    if (!isGameStarted) return;
+    if (event.key === 'ArrowRight') {
+        if (!!lastClickEvent && lastClickEvent.key == 'ArrowLeft') {
+            steps = 1;
+        }
+    } else if (event.key === 'ArrowLeft') {
+        if (!!lastClickEvent && lastClickEvent.key == 'ArrowRight') {
+            steps = 1;
+        }
+    }
+    lastClickEvent = event;
+});
+
+document.addEventListener('click', (event) => {
+    if (!isGameStarted) return;
+    if ((event.target.id === 'up-button' || event.target.id === 'down-button')) {
         // Increase or decrease car speed when left or right arrow is pressed
-        if (event.key === 'ArrowLeft') {
-            carSpeed += 2;
+        if (event.target.id === 'up-button') {
+            if (!!lastClickEvent && lastClickEvent.target.id === 'down-button') {
+                steps = 1;
+            }
         } else {
-            carSpeed -= 2;
-            // Ensure car speed doesn't go below zero
-            if (carSpeed < 0) {
-                carSpeed = 0;
+            if (!!lastClickEvent && lastClickEvent.target.id === 'up-button') {
+                steps = 1;
             }
         }
     }
+    
+    lastClickEvent = event;
 });
+
 
 // Game loop logic here
 function updateGame() {
@@ -73,7 +91,15 @@ function updateGame() {
         timerElement.textContent = `Time: ${elapsedTime} seconds`;
         
         // Update car position based on speed
-        carX += carSpeed;
+        carX += (steps * carSpeed);
+
+        if (steps > 0) {
+        console.log('steps: ', steps);
+        console.log('carX: ', carX);
+        console.log('steps * carSpeed', steps * carSpeed);
+        }
+
+        steps = 0;
         
         if (carX > canvas.width) {
             const gameOverTime = currentTime - startTime;
@@ -117,7 +143,7 @@ function drawCar(x) {
     const car = new Image();
     car.src = 'car.webp'; // Load your own car image here
     
-    ctx.drawImage(car, x, canvas.height / 2 - 50, 100, 100);
+    ctx.drawImage(car, x, canvas.height / 2 - 50, 100, 60);
 }
 
 // Start game loop

@@ -6,26 +6,41 @@
     <title>Car Racing Game</title>
     <style>
         #game-container {
-            width: 800px;
-            height: 600px;
-            border: 1px solid black;
-            position: relative;
-        }
-        
-        #car {
             position: absolute;
             top: 50%;
-            left: 0px;
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        #car-canvas{
+            border: 1px solid #000;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
-        <canvas id="car-canvas" width="800" height="600"></canvas>
-        <button id="start-button">Start Game</button>
+        <canvas id="car-canvas" width="400" height="600"></canvas>
+        </br>
+        <button class="button" id="start-button">Start Game</button>
         <span id="timer">Time: 0s</span>
-        <script src="script.js"></script>
+        </br>
+        <button class="button" id="up-button">left Arrow</button>
+        <button class="button" id="down-button">Right Arrow</button>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
