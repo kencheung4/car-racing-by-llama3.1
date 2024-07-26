@@ -11,6 +11,6 @@ And later request to add responsive:
 ```pls support responsive in mobile, add two arrow button on top of screen that can click too```
 
 
-Manual fixed code:
-1. The left & right arrow button in keyboard is not working as i expected, iterate a lot of time but still not working, found it difficult to instruct the LLM.
+### Manual fixed code:
+1. The left & right arrow button in keyboard is not working as expected, iterated a lot of time but still not working, found it difficult to instruct the LLM.
 2. Some responsive UI.
