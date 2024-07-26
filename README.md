@@ -2,6 +2,8 @@
 
 Created via Llama3.1:7b model.
 
+Live github page: https://kencheung4.github.io/car-racing-by-llama3.1/
+
 ![image](https://github.com/user-attachments/assets/3e77a373-1ef3-4272-bc49-045e83179c01)
 
 Using this prompt:
